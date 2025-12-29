@@ -3,6 +3,9 @@ import type { Metadata } from "next"
 import { Geist, Geist_Mono } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import "./globals.css"
+import Header from "@/components/header"
+import Footer from "@/components/footer"
+import { HeaderProvider } from "@/components/header-context"
 
 const _geist = Geist({ subsets: ["latin"] })
 const _geistMono = Geist_Mono({ subsets: ["latin"] })
@@ -15,16 +18,22 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       {
-        url: "/icon-light-32x32.png",
-        media: "(prefers-color-scheme: light)",
-      },
-      {
-        url: "/icon-dark-32x32.png",
-        media: "(prefers-color-scheme: dark)",
+        url: "/favicon.svg",
+        type: "image/svg+xml",
       },
       {
         url: "/icon.svg",
         type: "image/svg+xml",
+      },
+      {
+        url: "/icon-light-32x32.png",
+        media: "(prefers-color-scheme: light)",
+        sizes: "32x32",
+      },
+      {
+        url: "/icon-dark-32x32.png",
+        media: "(prefers-color-scheme: dark)",
+        sizes: "32x32",
       },
     ],
     apple: "/apple-icon.png",
@@ -39,7 +48,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`font-sans antialiased`}>
-        {children}
+        <HeaderProvider>
+          <div className="min-h-screen bg-background text-foreground flex flex-col">
+            <Header />
+            <main className="flex-1">{children}</main>
+            <Footer />
+          </div>
+        </HeaderProvider>
         <Analytics />
       </body>
     </html>

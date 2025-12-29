@@ -1,12 +1,13 @@
 "use client"
 
-import { useState, useMemo } from "react"
-import { Search, Sparkles, ArrowRight, GitCompare } from "lucide-react"
+import { useState, useMemo, useEffect } from "react"
+import { Search, ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import Link from "next/link"
+import { useSetHeaderActions } from "@/components/header-context"
+import HeaderActions from "@/components/header-actions"
 
 interface Tool {
   id: number
@@ -789,55 +790,27 @@ export default function BeginOSAIMatrix() {
   }
 
   const comparisonTools = toolsData.filter((tool) => selectedTools.includes(tool.id))
+  const setHeaderActions = useSetHeaderActions()
+
+  useEffect(() => {
+    const handleToggleCompare = () => {
+      setCompareMode((prev) => {
+        if (prev) {
+          setSelectedTools([])
+        }
+        return !prev
+      })
+    }
+
+    setHeaderActions(
+      <HeaderActions compareMode={compareMode} onToggleCompare={handleToggleCompare} />
+    )
+
+    return () => setHeaderActions(undefined)
+  }, [compareMode, setHeaderActions])
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
-      <header className="border-b border-border bg-card/50 backdrop-blur-sm sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-accent">
-                <Sparkles className="w-6 h-6 text-accent-foreground" />
-              </div>
-              <div>
-                <h1 className="text-xl font-semibold text-foreground">SoftwareVaults.com</h1>
-                <p className="text-sm text-muted-foreground">Discover & Compare Professional Software Tools</p>
-              </div>
-            </div>
-            <div className="flex items-center gap-4">
-              <nav className="hidden md:flex items-center gap-6">
-                <Link href="/" className="text-sm font-medium text-foreground hover:text-blue-600 transition-colors">
-                  Tools
-                </Link>
-                <Link
-                  href="/blog"
-                  className="text-sm font-medium text-foreground hover:text-blue-600 transition-colors"
-                >
-                  Blog
-                </Link>
-                <Link
-                  href="/about"
-                  className="text-sm font-medium text-foreground hover:text-blue-600 transition-colors"
-                >
-                  About
-                </Link>
-              </nav>
-              <Button
-                variant={compareMode ? "default" : "outline"}
-                onClick={() => {
-                  setCompareMode(!compareMode)
-                  if (compareMode) setSelectedTools([])
-                }}
-                className={compareMode ? "bg-blue-600 hover:bg-blue-700" : ""}
-              >
-                <GitCompare className="w-4 h-4 mr-2" />
-                {compareMode ? "Exit Compare" : "Compare Tools"}
-              </Button>
-            </div>
-          </div>
-        </div>
-      </header>
-
+    <div>
       <main className="container mx-auto px-4 py-8">
         <div className="mb-8 space-y-4">
           <div className="relative max-w-2xl">
@@ -1059,86 +1032,6 @@ export default function BeginOSAIMatrix() {
           </div>
         )}
       </main>
-
-      <footer className="border-t border-border bg-card/30 backdrop-blur-sm mt-16">
-        <div className="container mx-auto px-4 py-12">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div className="space-y-3">
-              <div className="flex items-center gap-2">
-                <Sparkles className="w-5 h-5 text-accent-foreground" />
-                <h3 className="font-semibold text-foreground">SoftwareVaults.com</h3>
-              </div>
-              <p className="text-sm text-muted-foreground">
-                Discover & compare the best professional software tools for your business.
-              </p>
-            </div>
-
-            <div>
-              <h4 className="font-semibold text-foreground mb-3">Company</h4>
-              <ul className="space-y-2 text-sm">
-                <li>
-                  <a href="/about" className="text-muted-foreground hover:text-foreground transition-colors">
-                    About Us
-                  </a>
-                </li>
-                <li>
-                  <a href="/blog" className="text-muted-foreground hover:text-foreground transition-colors">
-                    Blog
-                  </a>
-                </li>
-                <li>
-                  <a href="/contact" className="text-muted-foreground hover:text-foreground transition-colors">
-                    Contact
-                  </a>
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h4 className="font-semibold text-foreground mb-3">Legal</h4>
-              <ul className="space-y-2 text-sm">
-                <li>
-                  <a href="/privacy" className="text-muted-foreground hover:text-foreground transition-colors">
-                    Privacy Policy
-                  </a>
-                </li>
-                <li>
-                  <a href="/terms" className="text-muted-foreground hover:text-foreground transition-colors">
-                    Terms of Service
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="/affiliate-disclosure"
-                    className="text-muted-foreground hover:text-foreground transition-colors"
-                  >
-                    Affiliate Disclosure
-                  </a>
-                </li>
-                <li>
-                  <a href="/cookie-policy" className="text-muted-foreground hover:text-foreground transition-colors">
-                    Cookie Policy
-                  </a>
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h4 className="font-semibold text-foreground mb-3">Contact</h4>
-              <p className="text-sm text-muted-foreground">
-                Email:{" "}
-                <a href="mailto:hello@softwarevaults.com" className="text-blue-600 hover:text-blue-700">
-                  hello@softwarevaults.com
-                </a>
-              </p>
-            </div>
-          </div>
-
-          <div className="border-t border-border mt-8 pt-8 text-center text-sm text-muted-foreground">
-            <p>&copy; {new Date().getFullYear()} SoftwareVaults.com. All rights reserved.</p>
-          </div>
-        </div>
-      </footer>
     </div>
   )
 }

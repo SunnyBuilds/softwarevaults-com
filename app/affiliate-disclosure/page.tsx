@@ -1,28 +1,6 @@
 export default function AffiliateDisclosurePage() {
   return (
-    <div className="min-h-screen bg-background">
-      <header className="border-b border-border bg-card/50 backdrop-blur-sm">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center gap-3">
-            <a href="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
-              <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-accent">
-                <svg className="w-6 h-6 text-accent-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"
-                  />
-                </svg>
-              </div>
-              <div>
-                <h1 className="text-xl font-semibold text-foreground">SoftwareVaults.com</h1>
-              </div>
-            </a>
-          </div>
-        </div>
-      </header>
-
+    <div>
       <main className="container mx-auto px-4 py-12 max-w-4xl">
         <h1 className="text-4xl font-bold text-foreground mb-4">Affiliate Disclosure</h1>
         <p className="text-sm text-muted-foreground mb-8">Last Updated: December 29, 2024</p>

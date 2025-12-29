@@ -1,0 +1,19 @@
+<svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    @media (prefers-color-scheme: light) {
+      .sparkle-main { fill: #2563eb; }
+      .sparkle-dot { fill: #3b82f6; }
+    }
+    @media (prefers-color-scheme: dark) {
+      .sparkle-main { fill: #60a5fa; }
+      .sparkle-dot { fill: #93c5fd; }
+    }
+  </style>
+  <!-- Main sparkle star -->
+  <path class="sparkle-main" d="M12 2L13.09 8.26L19.5 9.5L13.09 10.74L12 17L10.91 10.74L4.5 9.5L10.91 8.26L12 2Z" fill="currentColor"/>
+  <!-- Small sparkle dots -->
+  <circle class="sparkle-dot" cx="5" cy="5" r="1.2" fill="currentColor"/>
+  <circle class="sparkle-dot" cx="19" cy="5" r="1.2" fill="currentColor"/>
+  <circle class="sparkle-dot" cx="5" cy="19" r="1.2" fill="currentColor"/>
+  <circle class="sparkle-dot" cx="19" cy="19" r="1.2" fill="currentColor"/>
+</svg>
