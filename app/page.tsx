@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useMemo, useEffect } from "react"
+import { useSearchParams, useRouter } from "next/navigation"
 import { Search, ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -756,10 +757,27 @@ const categories = [
 ]
 
 export default function BeginOSAIMatrix() {
+  const searchParams = useSearchParams()
+  const router = useRouter()
   const [searchQuery, setSearchQuery] = useState("")
   const [selectedCategory, setSelectedCategory] = useState("All")
   const [compareMode, setCompareMode] = useState(false)
   const [selectedTools, setSelectedTools] = useState<number[]>([])
+
+  // 从 URL 参数激活比较模式
+  useEffect(() => {
+    const compareParam = searchParams.get("compare")
+    if (compareParam === "true" && !compareMode) {
+      setCompareMode(true)
+      // 清理 URL 参数，避免重复激活
+      const newSearchParams = new URLSearchParams(searchParams.toString())
+      newSearchParams.delete("compare")
+      const newUrl = newSearchParams.toString() 
+        ? `${window.location.pathname}?${newSearchParams.toString()}`
+        : window.location.pathname
+      router.replace(newUrl, { scroll: false })
+    }
+  }, [searchParams, compareMode, router])
 
   const categoryCounts = useMemo(() => {
     const counts: Record<string, number> = {}
@@ -908,44 +926,6 @@ export default function BeginOSAIMatrix() {
           </div>
         ) : (
           <div className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredTools.map((tool) => (
-                <Card
-                  key={tool.id}
-                  onClick={() => toggleToolSelection(tool.id)}
-                  className={`group cursor-pointer transition-all duration-300 ${
-                    selectedTools.includes(tool.id)
-                      ? "border-accent shadow-lg ring-2 ring-accent"
-                      : "border-border hover:border-accent/50"
-                  }`}
-                >
-                  <CardHeader>
-                    <div className="flex items-start justify-between mb-3">
-                      <div className="w-16 h-16 rounded-lg overflow-hidden bg-muted flex items-center justify-center">
-                        <img
-                          src={tool.logo || "/placeholder.svg?height=64&width=64"}
-                          alt={`${tool.name} logo`}
-                          className="w-full h-full object-contain"
-                        />
-                      </div>
-                      {selectedTools.includes(tool.id) && (
-                        <Badge className="bg-accent text-accent-foreground">Selected</Badge>
-                      )}
-                    </div>
-                    <CardTitle className="text-lg text-foreground">{tool.name}</CardTitle>
-                    <div className="flex items-center gap-2 mt-2">
-                      <Badge variant="outline" className="text-xs border-border text-muted-foreground">
-                        {tool.category}
-                      </Badge>
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    <CardDescription className="text-sm text-muted-foreground">{tool.summary}</CardDescription>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-
             {comparisonTools.length === 2 && (
               <Card className="border-accent bg-card">
                 <CardHeader>
@@ -1023,6 +1003,44 @@ export default function BeginOSAIMatrix() {
                 </CardContent>
               </Card>
             )}
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredTools.map((tool) => (
+                <Card
+                  key={tool.id}
+                  onClick={() => toggleToolSelection(tool.id)}
+                  className={`group cursor-pointer transition-all duration-300 ${
+                    selectedTools.includes(tool.id)
+                      ? "border-accent shadow-lg ring-2 ring-accent"
+                      : "border-border hover:border-accent/50"
+                  }`}
+                >
+                  <CardHeader>
+                    <div className="flex items-start justify-between mb-3">
+                      <div className="w-16 h-16 rounded-lg overflow-hidden bg-muted flex items-center justify-center">
+                        <img
+                          src={tool.logo || "/placeholder.svg?height=64&width=64"}
+                          alt={`${tool.name} logo`}
+                          className="w-full h-full object-contain"
+                        />
+                      </div>
+                      {selectedTools.includes(tool.id) && (
+                        <Badge className="bg-accent text-accent-foreground">Selected</Badge>
+                      )}
+                    </div>
+                    <CardTitle className="text-lg text-foreground">{tool.name}</CardTitle>
+                    <div className="flex items-center gap-2 mt-2">
+                      <Badge variant="outline" className="text-xs border-border text-muted-foreground">
+                        {tool.category}
+                      </Badge>
+                    </div>
+                  </CardHeader>
+                  <CardContent>
+                    <CardDescription className="text-sm text-muted-foreground">{tool.summary}</CardDescription>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
           </div>
         )}
 

@@ -3,6 +3,7 @@
 import { Sparkles } from "lucide-react"
 import Link from "next/link"
 import { useHeaderActions } from "./header-context"
+import GlobalCompareButton from "./global-compare-button"
 
 export default function Header() {
   const actions = useHeaderActions()
@@ -38,7 +39,7 @@ export default function Header() {
                 About
               </Link>
             </nav>
-            {actions}
+            {actions || <GlobalCompareButton />}
           </div>
         </div>
       </div>
