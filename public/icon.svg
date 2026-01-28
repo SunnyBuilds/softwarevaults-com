@@ -9,7 +9,7 @@
       .foreground { fill: #0f172a; }
     }
   </style>
-  <rect class="background" width="180" height="180" rx="37" />
+    <rect class="background" width="180" height="180" rx="37" />
   <g transform="translate(90, 90)">
     <path class="foreground" d="M0 -8L2.5 -2.5L8 0L2.5 2.5L0 8L-2.5 2.5L-8 0L-2.5 -2.5L0 -8Z" fill="currentColor"/>
     <circle class="foreground" cx="-6" cy="-6" r="1.5" fill="currentColor"/>

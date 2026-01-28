@@ -22,7 +22,7 @@ export default function ContactPage() {
   }
 
   return (
-    <div>
+              <div>
       <main className="container mx-auto px-4 py-12 max-w-2xl">
         <h1 className="text-4xl font-bold text-foreground mb-6">Contact Us</h1>
 

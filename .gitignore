@@ -18,6 +18,7 @@ yarn-error.log*
 
 # env files
 .env*
+1_144645-Yaohui He.csv
 
 # vercel
 .vercel

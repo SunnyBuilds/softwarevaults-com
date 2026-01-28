@@ -25,7 +25,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   const { frontmatter, content } = post
 
   return (
-    <div>
+              <div>
       <main className="container mx-auto px-4 py-12">
         <Link href="/blog">
           <Button variant="ghost" className="mb-8">
@@ -37,12 +37,12 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         <article className="max-w-4xl mx-auto">
           {/* Hero Image */}
           {frontmatter.image && (
-            <div className="relative h-96 rounded-lg overflow-hidden mb-8">
+          <div className="relative h-96 rounded-lg overflow-hidden mb-8">
               <img src={frontmatter.image || "/placeholder.svg"} alt={frontmatter.title} className="w-full h-full object-cover" />
               {frontmatter.category && (
                 <Badge className="absolute top-6 left-6 bg-blue-600 text-white text-sm px-3 py-1">{frontmatter.category}</Badge>
               )}
-            </div>
+          </div>
           )}
 
           {/* Article Header */}
@@ -54,10 +54,10 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                 <span>{new Date(frontmatter.date).toLocaleDateString("en-US", { dateStyle: "long" })}</span>
               </div>
               {frontmatter.readTime && (
-                <div className="flex items-center gap-2">
-                  <Clock className="w-4 h-4" />
+              <div className="flex items-center gap-2">
+                <Clock className="w-4 h-4" />
                   <span>{frontmatter.readTime}</span>
-                </div>
+              </div>
               )}
             </div>
           </div>
